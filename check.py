@@ -75,8 +75,15 @@ def stat_check(data):
 
 def get_nys_data():
     headers = {'referer': 'https://am-i-eligible.covid19vaccine.health.ny.gov/'}
-    req = requests.get('https://am-i-eligible.covid19vaccine.health.ny.gov/api/list-providers', headers=headers)
+    try:
+        req = requests.get('https://am-i-eligible.covid19vaccine.health.ny.gov/api/list-providers', headers=headers)
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
     json_response = req.json()
+
+    if "providerList" not in json_response:
+        return "ERROR"
+    
     for provider in json_response['providerList']:
         if "SUNY Albany " == provider['providerName']:
             if "NAC" != provider['availableAppointments']:
@@ -87,7 +94,11 @@ def get_nys_data():
     return "ERROR"
 
 def get_pc_data():
-    req = requests.get('https://scrcxp.pdhi.com/ScreeningEvent/e047c75c-a431-41a8-8383-81613f39dd55/GetLocations/12065?state=NY')
+    try:
+        req = requests.get('https://scrcxp.pdhi.com/ScreeningEvent/e047c75c-a431-41a8-8383-81613f39dd55/GetLocations/12065?state=NY')
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
+
     json_response = req.json()
     if len(json_response) > 0:
         return "Available"
@@ -96,8 +107,21 @@ def get_pc_data():
 
 def get_cvs_data():
     headers = {'referer': 'https://www.cvs.com/immunizations/covid-19-vaccine?icid=coronavirus-lp-nav-vaccine'}
-    req = requests.get('https://www.cvs.com/immunizations/covid-19-vaccine.vaccine-status.NY.json?vaccineinfo', headers=headers)
+    try:
+        req = requests.get('https://www.cvs.com/immunizations/covid-19-vaccine.vaccine-status.NY.json?vaccineinfo', headers=headers)
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
+
     json_response = req.json()
+    if 'responsePayloadData' not in json_response:
+        return "ERROR"
+    else:
+        if 'data' not in json_response['responsePayloadData']:
+            return "ERROR"
+        else:
+            if 'NY' not in json_response['responsePayloadData']['data']:
+                return "ERROR"
+
     message = ''
     for provider in json_response['responsePayloadData']['data']['NY']:
         city = provider['city']
@@ -118,8 +142,15 @@ def get_walgreens_data():
         'content-type': 'application/json; charset=UTF-8',
     }
     body = '{"serviceId":"99","position":{"latitude":42.7477661,"longitude":-73.760537},"appointmentAvailability":{"startDateTime":"' + date + '"},"radius":25}'
-    req = requests.post(url, data=body, headers=headers)
+    try:
+        req = requests.post(url, data=body, headers=headers)
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
+    
     json_response = req.json()
+    if 'appointmentsAvailable' not in json_response:
+        return "ERROR"
+
     if False == json_response['appointmentsAvailable']:
         return "Unavailable"
     else:
