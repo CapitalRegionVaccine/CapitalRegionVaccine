@@ -1,3 +1,5 @@
+[![capital-region-vaccine-check](https://github.com/CapitalRegionVaccine/CapitalRegionVaccine/actions/workflows/site-check.yml/badge.svg)](https://github.com/CapitalRegionVaccine/CapitalRegionVaccine/actions/workflows/site-check.yml)
+
 # Capital Region Covid 19 Vaccine Checker
 
 This repository checks several locations in the New York State Capital Region for availability of Covid 19 vaccination appointments.
