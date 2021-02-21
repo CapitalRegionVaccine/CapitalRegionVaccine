@@ -5,7 +5,7 @@
 This repository checks several locations in the New York State Capital Region for availability of Covid 19 vaccination appointments.
 
 <!--start: status pages-->
-**Last Updated**: 2021-02-21 06:59 AM
+**Last Updated**: 2021-02-21 07:31 AM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -23,11 +23,11 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
 * Price Chopper Capital Region locations
 * Walgreens within a 25 mile radius of 12110 (Latham, NY)
 * The following CVS locations:
-  * Wynantskill
-  * Saratoga Springs
-  * Colonie
-  * Glenville
-  * Queensbury
+* Wynantskill
+* Saratoga Springs
+* Colonie
+* Glenville
+* Queensbury
 
 ## Historical data
 
