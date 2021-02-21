@@ -1,4 +1,6 @@
-# Current Status
+# Capital Region Covid 19 Vaccine Checker
+
+This repository checks several locations in the New York State Capital Region for availability of Covid 19 vaccination appointments.
 
 <!--start: status pages-->
 **Last Updated**: 2021-02-20 11:45 PM
