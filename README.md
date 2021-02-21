@@ -15,6 +15,24 @@ This repository checks several locations in the New York State Capital Region fo
 | [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)           | :no_entry: Unavailable    |
 <!--end: status pages-->
 
+## Site Information
+
+This checks the following locations approximatly every 5 minutes using GitHub Actions.
+
+* SUNY Albany NYS Vaccination Site
+* Price Chopper Capital Region locations
+* Walgreens within a 25 mile radius of 12110 (Latham, NY)
+* The following CVS locations:
+  * Wynantskill
+  * Saratoga Springs
+  * Colonie
+  * Glenville
+  * Queensbury
+
+## Historical data
+
+Historical availability data from previous checks can be found in the [data/site-data.csv](data/site-data.csv) spreadsheet.
+
 ## 📄 License
 
 - Code: [MIT](./LICENSE)
