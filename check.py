@@ -3,7 +3,7 @@ import requests
 import json
 import pandas as pd
 from datetime import datetime, timedelta
-
+from pytz import timezone
 
 def main():
     # get data
@@ -18,7 +18,8 @@ def main():
     wal_url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
     pc_url = 'https://www.pricechopper.com/covidvaccine/new-york/'
     
-    date = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    tz = timezone('EST')
+    date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
     sites = ['SUNY Albany','Price Chopper','CVS','Walgreens']
     appointments = [ nys, pc, cvs, wal ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
@@ -41,12 +42,12 @@ def main():
 
     md_file = open('README.md', 'r')
     new_md_content = ''
-    start_rpl = False    
+    start_rpl = False
     for line in md_file:
         stripped_line = line.strip()
         if '<!--end: status pages-->' == stripped_line:
             start_rpl = False
-            new_md_content += "**Last Updated**: " + str(datetime.now().strftime('%Y-%m-%d %I:%M %p')) + "\n\n"
+            new_md_content += "**Last Updated**: " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M %p')) + "\n\n"
             new_md_content += "| Site                | Status         |\n"
             new_md_content += "| ------------------- | -------------- |\n"
             new_md_content += "| [Suny Albany](" + nys_url + ")         | " + stat_check(nys) + "    |\n"
