@@ -5,7 +5,7 @@
 This repository checks several locations in the New York State Capital Region for availability of Covid 19 vaccination appointments.
 
 <!--start: status pages-->
-**Last Updated**: 2021-02-22 08:55 AM
+**Last Updated**: 2021-02-22 09:18 AM
 
 | Site                | Status         |
 | ------------------- | -------------- |
