@@ -2,6 +2,8 @@
 import requests
 import json
 import pandas as pd
+import tweepy
+import os
 from datetime import datetime, timedelta
 from pytz import timezone
 
@@ -31,8 +33,33 @@ def main():
 
     try:
         df_historical = pd.read_csv('data/site-data.csv')
+
+        ##Pull data from last row of history
+        last_data = df_historical.iloc[0]
+
+        ##Maybe tweet new availability
+        if "Available" == nys and "Available" != last_data['SUNY Albany']:
+            tweet_it('Vaccination appointments are available at SUNY Albany. ' + nys_url)
+        if "Available" == cvs and "Available" != last_data['CVS']:
+            tweet_it('Vaccination appointments are available at CVS. ' + cvs_url)
+        if "Available" == wal and "Available" != last_data['Walgreens']:
+            tweet_it('Vaccination appointments are available at Walgreens. ' + wal_url)
+        if "Available" == pc and "Available" != last_data['Price Chopper']:
+            tweet_it('Vaccination appointments are available at Price Chopper. ' + pc_url)
+
+        ##Maybe tweet new unavailability
+        if "Unavailable" == nys and "Available" == last_data['SUNY Albany']:
+            tweet_it('SUNY Albany vaccination appointments are now closed.')
+        if "Unavailable" == cvs and "Available" == last_data['CVS']:
+            tweet_it('CVS vaccination appointments are now closed.')
+        if "Unavailable" == wal and "Available" == last_data['Walgreens']:
+            tweet_it('Walgreens vaccination appointments are now closed.')
+        if "Unavailable" == pc and "Available" == last_data['Price Chopper']:
+            tweet_it('Price Chopper vaccination appointments are now closed.')
+
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
+
 
     # append today's data 
     df_historical = df_historical.append(df_wide).sort_values(by = 'date', ascending = False)
@@ -98,8 +125,8 @@ def get_pc_data():
         req = requests.get('https://scrcxp.pdhi.com/ScreeningEvent/e047c75c-a431-41a8-8383-81613f39dd55/GetLocations/12065?state=NY')
     except requests.exceptions.RequestException as e:
         return "ERROR"
-
     json_response = req.json()
+
     if len(json_response) > 0:
         return "Available"
     else:
@@ -155,5 +182,21 @@ def get_walgreens_data():
         return "Unavailable"
     else:
         return "Available"
+
+def tweet_it(message):
+    CONSUMER_KEY = os.environ.get('TWITTER_CONSUMER_KEY')
+    CONSUMER_SECRET = os.environ.get('TWITTER_CONSUMER_SECRET')
+    ACCESS_KEY = os.environ.get('TWITTER_ACCESS_KEY')
+    ACCESS_SECRET = os.environ.get('TWITTER_ACCESS_SECRET')
+
+    # OAuth process, using the keys and tokens
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    api = tweepy.API(auth)
+    
+    ##TODO: Error handling
+    print("Tweeting message: " + message)
+    api.update_status(message)
+
 
 main()

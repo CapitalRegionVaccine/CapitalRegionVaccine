@@ -22,6 +22,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: execute py script # run check.py to get the latest data
+        env: 
+          TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_CONSUMER_KEY }}
         run: python check.py
           
       - name: commit files
