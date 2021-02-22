@@ -1,6 +1,11 @@
 name: capital-region-vaccine-check
 
 on:
+  repository_dispatch:
+  push:
+    branches:
+      - main
+      - development
   schedule:
     - cron: '*/5 * * * *' # runs every 5 minutes
 
@@ -25,8 +30,8 @@ jobs:
         env: 
           TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
           TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-          TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_ACCESS_KEY }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
         run: python check.py
           
       - name: commit files
