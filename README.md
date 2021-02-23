@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-02-22 09:36 PM
+**Last Updated**: 2021-02-22 09:44 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -25,11 +25,11 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
 * Price Chopper Capital Region locations
 * Walgreens within a 25 mile radius of 12110 (Latham, NY)
 * The following CVS locations:
-  * Wynantskill
-  * Saratoga Springs
-  * Colonie
-  * Glenville
-  * Queensbury
+* Wynantskill
+* Saratoga Springs
+* Colonie
+* Glenville
+* Queensbury
 
 ## Historical data
 
