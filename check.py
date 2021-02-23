@@ -94,7 +94,7 @@ def main():
     md_file.close()
 
 def stat_check(data):
-    if 'Available' == data:
+    if data.startswith( 'Available' ):
         data = ':white_check_mark: ' + data + '  '
     else:
         data = ':no_entry: ' + data
@@ -128,7 +128,22 @@ def get_pc_data():
     json_response = req.json()
 
     if len(json_response) > 0:
-        return "Available"
+        is_available = ''
+        for response in json_response:
+            city = response['city']
+            slots = 0
+
+            for timeslot in response['timeSlots']:
+                if True != timeslot['isFull']:
+                    slots += 1
+
+            if slots > 0:
+                is_available = is_available + " " + city + '(' + str(slots) + ')'
+        
+        if len(is_available) > 0:
+            return "Available" + is_available
+        else:
+            return "Unavailable"
     else:
         return "Unavailable"
 
@@ -155,9 +170,9 @@ def get_cvs_data():
         status = provider['status']
         total = provider['totalAvailable']
         if city in ['WYNANTSKILL', 'SARATOGA SPRINGS', 'COLONIE', 'GLENVILLE', 'QUEENSBURY'] and status != 'Fully Booked' and total > 0:
-            message = message + "Available " + city + '(' + total + ')  '
+            message = message + " " + city + '(' + total + ')'
     if message != "":
-        return message
+        return "Available" + message
     else:
         return "Unavailable"
 
