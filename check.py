@@ -20,6 +20,12 @@ def main():
     wal_url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
     pc_url = 'https://www.pricechopper.com/covidvaccine/new-york/'
     
+    # img urls
+    nys_img = '<img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13">'
+    cvs_img = '<img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13">'
+    wal_img = '<img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13">'
+    pc_img = '<img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13">'
+
     tz = timezone('EST')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
     sites = ['SUNY Albany','Price Chopper','CVS','Walgreens']
@@ -77,10 +83,10 @@ def main():
             new_md_content += "**Last Updated**: " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M %p')) + "\n\n"
             new_md_content += "| Site                | Status         |\n"
             new_md_content += "| ------------------- | -------------- |\n"
-            new_md_content += "| [Suny Albany](" + nys_url + ")         | " + stat_check(nys) + "    |\n"
-            new_md_content += "| [Price Chopper](" + pc_url + ")       | " + stat_check(pc) + "    |\n"
-            new_md_content += "| [CVS](" + cvs_url + ")                 | " + stat_check(cvs) + "    |\n"
-            new_md_content += "| [Walgreens](" + wal_url + ")           | " + stat_check(wal) + "    |\n"
+            new_md_content += "| " + nys_img + " [Suny Albany](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
+            new_md_content += "| " + pc_img + " [Price Chopper](" + pc_url + ")     | " + stat_check(pc) + "    |\n"
+            new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
+            new_md_content += "| " + wal_img + " [Walgreens](" + wal_url + ")         | " + stat_check(wal) + "    |\n"
 
         if start_rpl != True:
             new_md_content += stripped_line + "\n"
@@ -94,7 +100,7 @@ def main():
     md_file.close()
 
 def stat_check(data):
-    if data.startswith( 'Available' ):
+    if 'Available' == data:
         data = ':white_check_mark: ' + data + '  '
     else:
         data = ':no_entry: ' + data
@@ -128,22 +134,7 @@ def get_pc_data():
     json_response = req.json()
 
     if len(json_response) > 0:
-        is_available = ''
-        for response in json_response:
-            city = response['city']
-            slots = 0
-
-            for timeslot in response['timeSlots']:
-                if True != timeslot['isFull']:
-                    slots += 1
-
-            if slots > 0:
-                is_available = is_available + " " + city + '(' + str(slots) + ')'
-        
-        if len(is_available) > 0:
-            return "Available" + is_available
-        else:
-            return "Unavailable"
+        return "Available"
     else:
         return "Unavailable"
 
@@ -170,9 +161,9 @@ def get_cvs_data():
         status = provider['status']
         total = provider['totalAvailable']
         if city in ['WYNANTSKILL', 'SARATOGA SPRINGS', 'COLONIE', 'GLENVILLE', 'QUEENSBURY'] and status != 'Fully Booked' and total > 0:
-            message = message + " " + city + '(' + total + ')'
+            message = message + "Available " + city + '(' + total + ')  '
     if message != "":
-        return "Available" + message
+        return message
     else:
         return "Unavailable"
 
