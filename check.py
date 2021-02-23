@@ -134,7 +134,22 @@ def get_pc_data():
     json_response = req.json()
 
     if len(json_response) > 0:
-        return "Available"
+        is_available = ''
+        for response in json_response:
+            city = response['city']
+            slots = 0
+
+            for timeslot in response['timeSlots']:
+                if True != timeslot['isFull']:
+                    slots += 1
+
+            if slots > 0:
+                is_available = is_available + " " + city + '(' + str(slots) + ')'
+
+        if len(is_available) > 0:
+            return "Available" + is_available
+        else:
+            return "Unavailable"
     else:
         return "Unavailable"
 
