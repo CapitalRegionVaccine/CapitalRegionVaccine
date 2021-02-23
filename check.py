@@ -44,23 +44,23 @@ def main():
         last_data = df_historical.iloc[0]
 
         ##Maybe tweet new availability
-        if "Available" == nys and "Available" != last_data['SUNY Albany']:
+        if nys.startswith( 'Available' ) and not last_data['SUNY Albany'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at SUNY Albany. ' + nys_url)
-        if "Available" == cvs and "Available" != last_data['CVS']:
-            tweet_it('Vaccination appointments are available at CVS. ' + cvs_url)
-        if "Available" == wal and "Available" != last_data['Walgreens']:
+        if cvs.startswith( 'Available' ) and not last_data['CVS'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at CVS. ' + cvs[9:] + " " + cvs_url)
+        if wal.startswith( 'Available' ) and not last_data['Walgreens'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Walgreens. ' + wal_url)
-        if "Available" == pc and "Available" != last_data['Price Chopper']:
-            tweet_it('Vaccination appointments are available at Price Chopper. ' + pc_url)
+        if pc.startswith( 'Available' ) and not last_data['Price Chopper'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Price Chopper. ' + pc[9:] + " " + pc_url)
 
         ##Maybe tweet new unavailability
-        if "Unavailable" == nys and "Available" == last_data['SUNY Albany']:
+        if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
             tweet_it('SUNY Albany vaccination appointments are now closed.')
-        if "Unavailable" == cvs and "Available" == last_data['CVS']:
+        if "Unavailable" == cvs and last_data['CVS'].startswith( 'Available' ):
             tweet_it('CVS vaccination appointments are now closed.')
-        if "Unavailable" == wal and "Available" == last_data['Walgreens']:
+        if "Unavailable" == wal and last_data['Walgreens'].startswith( 'Available' ):
             tweet_it('Walgreens vaccination appointments are now closed.')
-        if "Unavailable" == pc and "Available" == last_data['Price Chopper']:
+        if "Unavailable" == pc and last_data['Price Chopper'].startswith( 'Available' ):
             tweet_it('Price Chopper vaccination appointments are now closed.')
 
     except pd.errors.EmptyDataError:
@@ -100,7 +100,7 @@ def main():
     md_file.close()
 
 def stat_check(data):
-    if 'Available' == data:
+    if data.startswith( 'Available' ):
         data = ':white_check_mark: ' + data + '  '
     else:
         data = ':no_entry: ' + data
