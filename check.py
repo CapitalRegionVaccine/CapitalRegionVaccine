@@ -216,6 +216,9 @@ def tweet_it(message):
     api = tweepy.API(auth)
     
     ##TODO: Error handling
+    ##Try to get around twitter duplicate messaging
+    tz = timezone('EST')
+    message = message + " [" + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M %p')) + "]"
     print("Tweeting message: " + message)
     api.update_status(message)
 
