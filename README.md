@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-02-24 09:09 AM
+**Last Updated**: 2021-02-24 09:13 AM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -18,7 +18,7 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :no_entry: Unavailable    |
 <!--end: status pages-->
 
-\*\* *Albany Armory is currently restricted to certain residents.  Please check the NYS website for more details.*  
+\*\* *Albany Armory is currently restricted to certain residents.  Please check the NYS website for more details.*
 \*\*\* *Pharmacies are currently restricted to those 65 and older in NYS.  Please check each for individual restrctions.*
 
 ## Site Information
