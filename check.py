@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import tweepy
 import os
+import config as cfg
 from datetime import datetime, timedelta
 from pytz import timezone
 
@@ -116,19 +117,21 @@ def get_nys_data():
 
     if "providerList" not in json_response:
         return "ERROR"
-    
+
+    is_available = ''
     for provider in json_response['providerList']:
-        if "SUNY Albany " == provider['providerName']:
+        if provider['providerName'] in cfg.config["nys_sites"]:
             if "NAC" != provider['availableAppointments']:
-                return "Available"
-            else:
-                return "Unavailable"
+                is_available = is_available + provider['providerName'] + " "
     
-    return "ERROR"
+    if len(is_available) > 0:
+        return "Available" + is_available
+    else:
+        return "Unavailable"
 
 def get_pc_data():
     try:
-        req = requests.get('https://scrcxp.pdhi.com/ScreeningEvent/e047c75c-a431-41a8-8383-81613f39dd55/GetLocations/12065?state=NY')
+        req = requests.get('https://scrcxp.pdhi.com/ScreeningEvent/e047c75c-a431-41a8-8383-81613f39dd55/GetLocations/' + cfg.config["zipcode"] + '?state=NY')
     except requests.exceptions.RequestException as e:
         return "ERROR"
     json_response = req.json()
@@ -175,7 +178,7 @@ def get_cvs_data():
         city = provider['city']
         status = provider['status']
         total = provider['totalAvailable']
-        if city in ['WYNANTSKILL', 'SARATOGA SPRINGS', 'COLONIE', 'GLENVILLE', 'QUEENSBURY'] and status != 'Fully Booked' and total > 0:
+        if city in cfg.config["cvs_sites"] and status != 'Fully Booked' and total > 0:
             message = message + "Available " + city + '(' + total + ')  '
     if message != "":
         return message
@@ -189,7 +192,7 @@ def get_walgreens_data():
         'referer': 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening',
         'content-type': 'application/json; charset=UTF-8',
     }
-    body = '{"serviceId":"99","position":{"latitude":42.7477661,"longitude":-73.760537},"appointmentAvailability":{"startDateTime":"' + date + '"},"radius":25}'
+    body = '{"serviceId":"99","position":{' + cfg.config["wal_location"] + '},"appointmentAvailability":{"startDateTime":"' + date + '"},"radius":25}'
     try:
         req = requests.post(url, data=body, headers=headers)
     except requests.exceptions.RequestException as e:
