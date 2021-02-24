@@ -10,7 +10,9 @@ from pytz import timezone
 
 def main():
     # get data
-    nys = get_nys_data()
+    nys_data = get_nys_data()
+    nys = get_nys_appt(nys_data, cfg.config["nys_sites"])
+    alb = get_nys_appt(nys_data, cfg.config["alb_sites"])
     cvs = get_cvs_data()
     pc  = get_pc_data()
     wal = get_walgreens_data()
@@ -29,8 +31,8 @@ def main():
 
     tz = timezone('EST')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
-    sites = ['SUNY Albany','Price Chopper','CVS','Walgreens']
-    appointments = [ nys, pc, cvs, wal ]
+    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens']
+    appointments = [ nys, alb, pc, cvs, wal ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
     df_long.head()
 
@@ -53,6 +55,8 @@ def main():
             tweet_it('Vaccination appointments are available at Walgreens. ' + wal_url)
         if pc.startswith( 'Available' ) and not last_data['Price Chopper'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Price Chopper. ' + pc[9:] + " " + pc_url)
+        if alb.startswith( 'Available' ) and not last_data['Albany Armory'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Albany Armory (**resident restricted). ' + nys_url)
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
@@ -63,6 +67,9 @@ def main():
             tweet_it('Walgreens vaccination appointments are now closed.')
         if "Unavailable" == pc and last_data['Price Chopper'].startswith( 'Available' ):
             tweet_it('Price Chopper vaccination appointments are now closed.')
+        if "Unavailable" == alb and last_data['Albany Armory'].startswith( 'Available' ):
+            tweet_it('Albany Armory vaccination appointments are now closed.')
+
 
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
@@ -85,6 +92,7 @@ def main():
             new_md_content += "| Site                | Status         |\n"
             new_md_content += "| ------------------- | -------------- |\n"
             new_md_content += "| " + nys_img + " [Suny Albany](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
+            new_md_content += "| " + nys_img + " [Albany Armory](" + nys_url + ")    | " + stat_check(alb) + "    |\n"
             new_md_content += "| " + pc_img + " [Price Chopper](" + pc_url + ")     | " + stat_check(pc) + "    |\n"
             new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
             new_md_content += "| " + wal_img + " [Walgreens](" + wal_url + ")         | " + stat_check(wal) + "    |\n"
@@ -114,13 +122,18 @@ def get_nys_data():
     except requests.exceptions.RequestException as e:
         return "ERROR"
     json_response = req.json()
+    return json_response
 
+def get_nys_appt(json_response, nys_sites):
+    if "ERROR" == json_response:
+        return json_response
+    
     if "providerList" not in json_response:
         return "ERROR"
 
     is_available = ''
     for provider in json_response['providerList']:
-        if provider['providerName'] in cfg.config["nys_sites"]:
+        if provider['providerName'] in nys_sites:
             if "NAC" != provider['availableAppointments']:
                 is_available = is_available + provider['providerName'] + " "
     
