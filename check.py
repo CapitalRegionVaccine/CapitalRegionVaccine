@@ -85,7 +85,7 @@ def main():
     new_md_content = ''
     start_rpl = False
     for line in md_file:
-        stripped_line = line.strip()
+        stripped_line = line.rstrip('\r\n')
         if '<!--end: status pages-->' == stripped_line:
             start_rpl = False
             new_md_content += "**Last Updated**: " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M %p')) + "\n\n"
