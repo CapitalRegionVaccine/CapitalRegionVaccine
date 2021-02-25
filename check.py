@@ -190,8 +190,10 @@ def get_cvs_data():
     for provider in json_response['responsePayloadData']['data']['NY']:
         city = provider['city']
         status = provider['status']
-        total = provider['totalAvailable']
-        if city in cfg.config["cvs_sites"] and status != 'Fully Booked' and total > 0:
+        total = 0
+        if 'totalAvailable' in provider:
+            total = provider['totalAvailable']
+        if city in cfg.config["cvs_sites"] and status != 'Fully Booked':
             message = message + "Available " + city + '(' + total + ')  '
     if message != "":
         return message
