@@ -16,23 +16,26 @@ def main():
     cvs = get_cvs_data()
     pc  = get_pc_data()
     wal = get_walgreens_data()
+    han = get_han_data()
 
     # book urls
     nys_url = 'https://am-i-eligible.covid19vaccine.health.ny.gov/'
     cvs_url = 'https://www.cvs.com/immunizations/covid-19-vaccine'
     wal_url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
     pc_url = 'https://www.pricechopper.com/covidvaccine/new-york/'
-    
+    han_url = 'https://www.hannaford.com/pharmacy/covid-19-vaccine'
+
     # img urls
     nys_img = '<img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13">'
     cvs_img = '<img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13">'
     wal_img = '<img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13">'
     pc_img = '<img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13">'
+    han_img = '<img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13">'
 
     tz = timezone('EST')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
-    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens']
-    appointments = [ nys, alb, pc, cvs, wal ]
+    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford']
+    appointments = [ nys, alb, pc, cvs, wal, han ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
     df_long.head()
 
@@ -57,6 +60,8 @@ def main():
             tweet_it('Vaccination appointments are available at Price Chopper. ' + pc[9:] + " " + pc_url)
         if alb.startswith( 'Available' ) and not last_data['Albany Armory'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Albany Armory (**resident restricted). ' + nys_url)
+        if han.startswith( 'Available' ) and not last_data['Hannaford'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Hannaford ' + han[9:] + han_url)
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
@@ -69,7 +74,8 @@ def main():
             tweet_it('Price Chopper vaccination appointments are now closed.')
         if "Unavailable" == alb and last_data['Albany Armory'].startswith( 'Available' ):
             tweet_it('Albany Armory vaccination appointments are now closed.')
-
+        if "Unavailable" == han and last_data['Hannaford'].startswith( 'Available' ):
+            tweet_it('Hannaford vaccination appointments are now closed.')
 
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
@@ -96,6 +102,7 @@ def main():
             new_md_content += "| " + pc_img + " [Price Chopper](" + pc_url + ")     | " + stat_check(pc) + "    |\n"
             new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
             new_md_content += "| " + wal_img + " [Walgreens](" + wal_url + ")         | " + stat_check(wal) + "    |\n"
+            new_md_content += "| " + han_img + " [Hannaford](" + han_url + ")         | " + stat_check(han) + "    |\n"
 
         if start_rpl != True:
             new_md_content += stripped_line + "\n"
@@ -137,6 +144,44 @@ def get_nys_appt(json_response, nys_sites):
             if "NAC" != provider['availableAppointments']:
                 is_available = is_available + provider['providerName'] + " "
     
+    if len(is_available) > 0:
+        return "Available" + is_available
+    else:
+        return "Unavailable"
+
+def get_han_data():
+    session = requests.session()
+    try:
+        session.get('https://hannafordsched.rxtouch.com/rbssched/program/covid19/Patient/Advisory')
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
+
+    url = ' https://hannafordsched.rxtouch.com/rbssched/program/covid19/Calendar/PatientCalendar'
+    tz = timezone('EST')
+    year = str(datetime.now(tz).strftime('%Y'))
+    month =  datetime.now(tz).strftime('X%m').replace('X0','X').replace('X','')
+
+    is_available = ''
+    for site in cfg.config["han_sites"]:
+        data = {
+            'facilityId': site,
+            'month': month,
+            'year': year,
+            'snapCalendarToFirstAvailMonth': 'false'
+        }
+
+        try:
+            req = session.post(url, data=data)
+        except requests.exceptions.RequestException as e:
+            return "ERROR"
+
+        json_response = req.json()
+        if 'Data' in json_response:
+            if 'Days' in json_response['Data']:
+                for day in json_response['Data']['Days']:
+                    if True == day['Available']:
+                        is_available = ' (' +  str(day['DayOfWeek']) + ' ' + str(day['DayNumber']) + ')'
+
     if len(is_available) > 0:
         return "Available" + is_available
     else:
