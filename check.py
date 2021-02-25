@@ -238,7 +238,7 @@ def get_cvs_data():
         total = 0
         if 'totalAvailable' in provider:
             total = provider['totalAvailable']
-        if city in cfg.config["cvs_sites"] and status != 'Fully Booked':
+        if city in cfg.config["cvs_sites"] and status != 'Fully Booked' and total > 0:
             message = message + "Available " + city + '(' + str(total) + ')  '
     if message != "":
         return message
@@ -283,7 +283,7 @@ def tweet_it(message):
     tz = timezone('EST')
     message = message + " [" + str(datetime.now(tz).strftime('%m-%d-%Y %I:%M %p')) + "]"
     print("Tweeting message: " + message)
-    #api.update_status(message)
+    api.update_status(message)
 
 
 main()
