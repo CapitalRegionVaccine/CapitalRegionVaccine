@@ -39,6 +39,7 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
   * Troy
 * The following Hannaford locations:
   * Albany
+  * Ballston Lake
 
 ## Historical data
 
