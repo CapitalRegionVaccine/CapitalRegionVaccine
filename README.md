@@ -34,6 +34,8 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
   * Colonie
   * Glenville
   * Queensbury
+  * Albany
+  * Troy
 
 ## Historical data
 
