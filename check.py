@@ -283,11 +283,13 @@ def get_walgreens_data():
 def get_tuc_data():
     is_available = "Unavailable"
 
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36'
     chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
     print(f'Using chromedriver: {chromedriver_path}')
     options = webdriver.ChromeOptions()
+    options.add_argument(f'user-agent={user_agent}')
     options.headless = True
-
+    
     url = 'https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F'
 
     driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
@@ -298,6 +300,7 @@ def get_tuc_data():
     except TimeoutException:
         driver.close
         driver.quit
+        print("TIMEOUT waiting")
         return "ERROR"
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -327,7 +330,7 @@ def tweet_it(message):
     tz = timezone('EST')
     message = message + " [" + str(datetime.now(tz).strftime('%m-%d-%Y %I:%M %p')) + "]"
     print("Tweeting message: " + message)
-    #api.update_status(message)
+    api.update_status(message)
 
 
 main()
