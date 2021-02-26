@@ -3,4 +3,4 @@ requests==2.23.0
 pandas==1.0.3
 tweepy==3.10.0
 bs4==0.0.1
-selenium==1.25.8
+selenium==3.141.0
