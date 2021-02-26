@@ -283,7 +283,7 @@ def get_walgreens_data():
 def get_tuc_data():
     is_available = "Unavailable"
 
-    chromedriver_path = os.environ.get('CHROMEWEBDRIVER', '.') + '/chromedriver'
+    chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
     print(f'Using chromedriver: {chromedriver_path}')
     options = webdriver.ChromeOptions()
     options.headless = False
