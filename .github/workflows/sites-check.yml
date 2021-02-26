@@ -24,13 +24,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+
+      - name: Run chrome
+        run: |
+          $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
+
       - name: execute py script # run check.py to get the latest data
         env: 
           TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
           TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
           TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_ACCESS_KEY }}
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
-        run: python check.py
+        run: |
+          export CHROMEWEBDRIVER=$CHROMEWEBDRIVER/chromedriver
+          python check.py
           
       - name: commit files
         run: |

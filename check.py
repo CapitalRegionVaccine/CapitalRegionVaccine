@@ -7,6 +7,12 @@ import os
 import config as cfg
 from datetime import datetime, timedelta
 from pytz import timezone
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 def main():
     # get data
@@ -17,6 +23,7 @@ def main():
     pc  = get_pc_data()
     wal = get_walgreens_data()
     han = get_han_data()
+    tuc = get_tuc_data()
 
     # book urls
     nys_url = 'https://am-i-eligible.covid19vaccine.health.ny.gov/'
@@ -24,6 +31,7 @@ def main():
     wal_url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
     pc_url = 'https://www.pricechopper.com/covidvaccine/new-york/'
     han_url = 'https://www.hannaford.com/pharmacy/covid-19-vaccine'
+    tuc_url = 'https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F'
 
     # img urls
     nys_img = '<img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13">'
@@ -34,8 +42,8 @@ def main():
 
     tz = timezone('EST')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
-    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford']
-    appointments = [ nys, alb, pc, cvs, wal, han ]
+    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center']
+    appointments = [ nys, alb, pc, cvs, wal, han, tuc ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
     df_long.head()
 
@@ -62,6 +70,8 @@ def main():
             tweet_it('Vaccination appointments are available at Albany Armory (**resident restricted). ' + nys_url)
         if han.startswith( 'Available' ) and not last_data['Hannaford'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Hannaford ' + han[9:] + han_url)
+        if tuc.startswith( 'Available' ) and not last_data['Times Union Center'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Times Union Center '+ tuc_url)
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
@@ -76,6 +86,8 @@ def main():
             tweet_it('Albany Armory vaccination appointments are now closed.')
         if "Unavailable" == han and last_data['Hannaford'].startswith( 'Available' ):
             tweet_it('Hannaford vaccination appointments are now closed.')
+        if "Unavailable" == tuc and last_data['Times Union Center'].startswith( 'Available' ):
+            tweet_it('Times Union Center vaccination appointments are now closed.')
 
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
@@ -100,6 +112,7 @@ def main():
             new_md_content += "| " + nys_img + " [Suny Albany](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
             new_md_content += "| " + nys_img + " [Albany Armory](" + nys_url + ")    | " + stat_check(alb) + "    |\n"
             new_md_content += "| " + pc_img + " [Price Chopper](" + pc_url + ")     | " + stat_check(pc) + "    |\n"
+            new_md_content += "| " + nys_img + " [Times Union Center](" + tuc_url + ")| " + stat_check(tuc) + "    |\n"
             new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
             new_md_content += "| " + wal_img + " [Walgreens](" + wal_url + ")         | " + stat_check(wal) + "    |\n"
             new_md_content += "| " + han_img + " [Hannaford](" + han_url + ")         | " + stat_check(han) + "    |\n"
@@ -267,6 +280,37 @@ def get_walgreens_data():
     else:
         return "Available"
 
+def get_tuc_data():
+    is_available = "Unavailable"
+
+    chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
+    print(f'Using chromedriver: {chromedriver_path}')
+    options = webdriver.ChromeOptions()
+    options.headless = True
+
+    url = 'https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F'
+
+    driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+    driver.get(url)
+
+    try:
+        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="ny-universal-footer"]')))
+    except TimeoutException:
+        driver.close
+        driver.quit
+        return "ERROR"
+
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    appointments = soup.select("div[class='col-sm-11 col-md-10 col-lg-11 col-xl-11']")
+
+    if appointments is not None:
+        if len(appointments) > 0:
+            is_available = "Available"
+
+    driver.close
+    driver.quit
+    return is_available
+
 def tweet_it(message):
     CONSUMER_KEY = os.environ.get('TWITTER_CONSUMER_KEY')
     CONSUMER_SECRET = os.environ.get('TWITTER_CONSUMER_SECRET')
@@ -283,7 +327,7 @@ def tweet_it(message):
     tz = timezone('EST')
     message = message + " [" + str(datetime.now(tz).strftime('%m-%d-%Y %I:%M %p')) + "]"
     print("Tweeting message: " + message)
-    api.update_status(message)
+    #api.update_status(message)
 
 
 main()
