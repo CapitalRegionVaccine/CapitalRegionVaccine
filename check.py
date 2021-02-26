@@ -286,7 +286,7 @@ def get_tuc_data():
     chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
     print(f'Using chromedriver: {chromedriver_path}')
     options = webdriver.ChromeOptions()
-    options.headless = False
+    options.headless = True
 
     url = 'https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F'
 
