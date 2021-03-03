@@ -141,6 +141,12 @@ def get_nys_data():
         req = requests.get('https://am-i-eligible.covid19vaccine.health.ny.gov/api/list-providers', headers=headers)
     except requests.exceptions.RequestException as e:
         return "ERROR"
+
+    try:
+        json_object = json.loads(req.text)
+    except ValueError as e:
+        return "ERROR"
+
     json_response = req.json()
     return json_response
 
