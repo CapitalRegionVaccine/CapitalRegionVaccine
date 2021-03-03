@@ -194,6 +194,12 @@ def get_han_data():
         except requests.exceptions.RequestException as e:
             return "ERROR"
 
+        try:
+            json_object = json.loads(req.text)
+        except ValueError as e:
+            print("Hannaford json error")
+            return "ERROR"
+
         json_response = req.json()
         if 'Data' in json_response:
             if 'Days' in json_response['Data']:
