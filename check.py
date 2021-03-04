@@ -5,6 +5,7 @@ import pandas as pd
 import tweepy
 import os
 import config as cfg
+import time
 from datetime import datetime, timedelta
 from pytz import timezone
 from bs4 import BeautifulSoup
@@ -271,6 +272,74 @@ def get_cvs_data():
         return "Unavailable"
 
 def get_walgreens_data():
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36'
+    chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
+    print(f'Using chromedriver: {chromedriver_path}')
+    options = webdriver.ChromeOptions()
+    options.add_argument(f'user-agent={user_agent}')
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument("window-size=1280,800")
+    options.headless = True
+
+    driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+    driver.get('https://www.walgreens.com')
+
+    try:
+        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="wag-footer-disclaimer-new"]')))
+    except TimeoutException:
+        driver.close
+        driver.quit
+        print("TIMEOUT waiting 1")
+        return "ERROR"
+
+
+    url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
+    driver.get(url)
+
+    try:
+        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="inputLocation"]')))
+    except TimeoutException:
+        driver.close
+        driver.quit
+        print("TIMEOUT waiting 2")
+        return "ERROR"
+
+    locationInput = driver.find_element_by_id("inputLocation")
+    locationInput.click()
+    locationInput.clear()
+    locationInput.send_keys(cfg.config["zipcode"])
+    time.sleep(1)
+    driver.find_element_by_class_name("btn").click()
+
+    try:
+        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//p[contains(@class, "fs16")]')))
+    except TimeoutException:
+        driver.close
+        driver.quit
+        print("TIMEOUT waiting 3")
+        return "ERROR"
+
+
+    popUp = driver.find_element_by_class_name("fs16")
+    if popUp.text != "Appointments unavailable":
+        driver.close
+        driver.quit
+        return "Available"
+    else:
+        driver.close
+        driver.quit
+        return "Unavailable"
+
+
+def get_walgreens_datax():
+    session = requests.session()
+    try:
+        print("Getting walgreens start")
+        session.get('https://www.walgreens.com/findcare/vaccination/covid-19/location-screening', timeout=20)
+    except requests.exceptions.RequestException as e:
+        print("WG timeout")
+        return "ERROR"
+
     url = 'https://www.walgreens.com/hcschedulersvc/svc/v1/immunizationLocations/availability'
     date = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
     headers = {
@@ -279,7 +348,8 @@ def get_walgreens_data():
     }
     body = '{"serviceId":"99","position":{' + cfg.config["wal_location"] + '},"appointmentAvailability":{"startDateTime":"' + date + '"},"radius":25}'
     try:
-        req = requests.post(url, data=body, headers=headers)
+        print("Getting walgreens next")
+        req = session.post(url, data=body, headers=headers, timeout=20)
     except requests.exceptions.RequestException as e:
         return "ERROR"
     
