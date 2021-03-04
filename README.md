@@ -41,6 +41,7 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
 * The following Hannaford locations:
   * Albany
   * Ballston Lake
+  * Voorheesville
 
 ## Historical data
 
