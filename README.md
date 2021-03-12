@@ -46,6 +46,7 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
   * Albany
   * Ballston Lake
   * Voorheesville
+  * Wynantskill
 
 ## Historical data
 
