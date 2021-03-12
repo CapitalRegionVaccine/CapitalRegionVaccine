@@ -38,6 +38,10 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
   * Queensbury
   * Albany
   * Troy
+  * Glenville
+  * Latham
+  * Rensselaer
+  * Schenectady
 * The following Hannaford locations:
   * Albany
   * Ballston Lake
