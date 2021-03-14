@@ -412,7 +412,7 @@ def tweet_it(message):
     tz = timezone('America/New_York')
     message = message + " [" + str(datetime.now(tz).strftime('%m-%d-%Y %I:%M %p')) + "]"
     print("Tweeting message: " + message)
-    #api.update_status(message)
+    api.update_status(message)
 
 
 main()
