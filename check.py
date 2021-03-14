@@ -287,8 +287,8 @@ def get_walgreens_data():
     try:
         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="wag-footer-disclaimer-new"]')))
     except TimeoutException:
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         print("TIMEOUT waiting 1")
         return "ERROR"
 
@@ -299,8 +299,8 @@ def get_walgreens_data():
     try:
         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="inputLocation"]')))
     except TimeoutException:
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         print("TIMEOUT waiting 2")
         return "ERROR"
 
@@ -314,20 +314,20 @@ def get_walgreens_data():
     try:
         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//p[contains(@class, "fs16")]')))
     except TimeoutException:
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         print("TIMEOUT waiting 3")
         return "ERROR"
 
 
     popUp = driver.find_element_by_class_name("fs16")
     if popUp.text != "Appointments unavailable":
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         return "Available"
     else:
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         return "Unavailable"
 
 
@@ -380,8 +380,8 @@ def get_tuc_data():
     try:
         WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="ny-universal-footer"]')))
     except TimeoutException:
-        driver.close
-        driver.quit
+        driver.close()
+        driver.quit()
         print("TIMEOUT waiting")
         return "ERROR"
 
@@ -392,8 +392,8 @@ def get_tuc_data():
         if len(appointments) > 0:
             is_available = "Available"
 
-    driver.close
-    driver.quit
+    driver.close()
+    driver.quit()
     return is_available
 
 def tweet_it(message):
