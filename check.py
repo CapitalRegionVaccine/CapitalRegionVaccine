@@ -24,7 +24,8 @@ def main():
     pc  = get_pc_data()
     wal = get_walgreens_data()
     han = get_han_data()
-    tuc = get_tuc_data()
+    #tuc = get_tuc_data()
+    tuc = "Unavailable"
 
     # book urls
     nys_url = 'https://am-i-eligible.covid19vaccine.health.ny.gov/'
