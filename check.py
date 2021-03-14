@@ -41,7 +41,7 @@ def main():
     pc_img = '<img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13">'
     han_img = '<img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13">'
 
-    tz = timezone('EST')
+    tz = timezone('America/New_York')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
     sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center']
     appointments = [ nys, alb, pc, cvs, wal, han, tuc ]
@@ -177,7 +177,7 @@ def get_han_data():
         return "ERROR"
 
     url = ' https://hannafordsched.rxtouch.com/rbssched/program/covid19/Calendar/PatientCalendar'
-    tz = timezone('EST')
+    tz = timezone('America/New_York')
     year = str(datetime.now(tz).strftime('%Y'))
     month =  datetime.now(tz).strftime('X%m').replace('X0','X').replace('X','')
 
@@ -409,10 +409,10 @@ def tweet_it(message):
     
     ##TODO: Error handling
     ##Try to get around twitter duplicate messaging
-    tz = timezone('EST')
+    tz = timezone('America/New_York')
     message = message + " [" + str(datetime.now(tz).strftime('%m-%d-%Y %I:%M %p')) + "]"
     print("Tweeting message: " + message)
-    api.update_status(message)
+    #api.update_status(message)
 
 
 main()
