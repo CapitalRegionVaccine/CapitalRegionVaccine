@@ -6,6 +6,7 @@ import tweepy
 import os
 import config as cfg
 import time
+from time import sleep
 from datetime import datetime, timedelta
 from pytz import timezone
 from bs4 import BeautifulSoup
@@ -14,6 +15,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from geopy.distance import geodesic
 
 def main():
     # get data
@@ -23,6 +25,7 @@ def main():
     cvs = get_cvs_data()
     pc  = get_pc_data()
     wal = get_walgreens_data()
+    wmt = get_walmart_data()
     han = get_han_data()
     #tuc = get_tuc_data()
     tuc = "Unavailable"
@@ -34,6 +37,7 @@ def main():
     pc_url = 'https://www.pricechopper.com/covidvaccine/new-york/'
     han_url = 'https://www.hannaford.com/pharmacy/covid-19-vaccine'
     tuc_url = 'https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F'
+    wmt_url = 'https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes'
 
     # img urls
     nys_img = '<img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13">'
@@ -41,11 +45,12 @@ def main():
     wal_img = '<img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13">'
     pc_img = '<img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13">'
     han_img = '<img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13">'
+    wmt_img = '<img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13">'
 
     tz = timezone('America/New_York')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
-    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center']
-    appointments = [ nys, alb, pc, cvs, wal, han, tuc ]
+    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center','Walmart']
+    appointments = [ nys, alb, pc, cvs, wal, han, tuc, wmt ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
     df_long.head()
 
@@ -74,6 +79,8 @@ def main():
             tweet_it('Vaccination appointments are available at Hannaford ' + han[9:] + han_url)
         if tuc.startswith( 'Available' ) and not last_data['Times Union Center'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Times Union Center '+ tuc_url)
+        if wmt.startswith( 'Available' ) and not last_data['Walmart'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Walmart ' + wmt[9:] + wmt_url)
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
@@ -90,6 +97,9 @@ def main():
             tweet_it('Hannaford vaccination appointments are now closed.')
         if "Unavailable" == tuc and last_data['Times Union Center'].startswith( 'Available' ):
             tweet_it('Times Union Center vaccination appointments are now closed.')
+        if "Unavailable" == wmt and last_data['Walmart'].startswith( 'Available' ):
+            tweet_it('Walmart vaccination appointments are now closed.')
+
 
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
@@ -118,6 +128,8 @@ def main():
             new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
             new_md_content += "| " + wal_img + " [Walgreens](" + wal_url + ")         | " + stat_check(wal) + "    |\n"
             new_md_content += "| " + han_img + " [Hannaford](" + han_url + ")         | " + stat_check(han) + "    |\n"
+            new_md_content += "| " + wmt_img + " [Walmart](" + wmt_url + ")         | " + stat_check(wmt) + "    |\n"
+
 
         if start_rpl != True:
             new_md_content += stripped_line + "\n"
@@ -267,6 +279,29 @@ def get_cvs_data():
             total = provider['totalAvailable']
         if city in cfg.config["cvs_sites"] and status != 'Fully Booked':
             message = message + city + ' '
+    if message != "":
+        return "Available " + message
+    else:
+        return "Unavailable"
+
+def get_walmart_data():
+    url = 'https://www.vaccinespotter.org/api/v0/stores/NY/walmart.json'
+    try:
+        req = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        return "ERROR"
+    json_response = req.json()
+
+    latham = (42.744869, -73.752037)
+
+    message = ''
+    for site in json_response:
+        site_long = (site['latitude'], site['longitude'])
+        distance = geodesic(latham, site_long).miles
+        if distance < 30:
+            if site['appointments_available'] == True:
+                message = message + site['city'] + ' (' + str(len(site['appointments'])) + ') '
+
     if message != "":
         return "Available " + message
     else:
