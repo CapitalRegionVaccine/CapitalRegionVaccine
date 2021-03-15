@@ -4,3 +4,4 @@ pandas==1.0.3
 tweepy==3.10.0
 bs4==0.0.1
 selenium==3.141.0
+geopy==1.50
