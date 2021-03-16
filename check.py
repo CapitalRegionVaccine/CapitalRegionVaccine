@@ -278,7 +278,7 @@ def get_cvs_data():
         if 'totalAvailable' in provider:
             total = provider['totalAvailable']
         if city in cfg.config["cvs_sites"] and status != 'Fully Booked':
-            message = message + city + ' '
+            message = message + city.title() + ' '
     if message != "":
         return "Available " + message
     else:
