@@ -49,6 +49,7 @@ This checks the following locations approximatly every 5 minutes using GitHub Ac
   * Voorheesville
   * Wynantskill
   * Altamont
+  * Ballston Spa
 * Walmart locations within 30 miles of Latham, NY
 
 ## Historical data
