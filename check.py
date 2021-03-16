@@ -70,7 +70,7 @@ def main():
         if cvs.startswith( 'Available' ) and not last_data['CVS'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at CVS. ' + cvs[9:] + " " + cvs_url)
         if wal.startswith( 'Available' ) and not last_data['Walgreens'].startswith( 'Available' ):
-            tweet_it('Vaccination appointments are available at Walgreens. ' + wal_url)
+            tweet_it('Vaccination appointments are available at Walgreens. ' + wal[9:] + wal_url)
         if pc.startswith( 'Available' ) and not last_data['Price Chopper'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Price Chopper. ' + pc[9:] + " " + pc_url)
         if alb.startswith( 'Available' ) and not ( last_data['Albany Armory'].startswith( 'Available' ) or last_data['Albany Armory'].startswith( 'ERROR' ) ):
@@ -308,95 +308,32 @@ def get_walmart_data():
         return "Unavailable"
 
 def get_walgreens_data():
-    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36'
-    chromedriver_path = os.environ.get('CHROMEWEBDRIVER', './chromedriver.exe')
-    print(f'Using chromedriver: {chromedriver_path}')
-    options = webdriver.ChromeOptions()
-    options.add_argument(f'user-agent={user_agent}')
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    options.add_argument("window-size=1280,800")
-    options.headless = True
-
-    driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
-    driver.get('https://www.walgreens.com')
-
+    url = 'https://www.vaccinespotter.org/api/v0/stores/NY/walgreens.json'
     try:
-        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="wag-footer-disclaimer-new"]')))
-    except TimeoutException:
-        driver.close()
-        driver.quit()
-        print("TIMEOUT waiting 1")
-        return "ERROR"
-
-
-    url = 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening'
-    driver.get(url)
-
-    try:
-        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="inputLocation"]')))
-    except TimeoutException:
-        driver.close()
-        driver.quit()
-        print("TIMEOUT waiting 2")
-        return "ERROR"
-
-    locationInput = driver.find_element_by_id("inputLocation")
-    locationInput.click()
-    locationInput.clear()
-    locationInput.send_keys(cfg.config["zipcode"])
-    time.sleep(1)
-    driver.find_element_by_class_name("btn").click()
-
-    try:
-        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//p[contains(@class, "fs16")]')))
-    except TimeoutException:
-        driver.close()
-        driver.quit()
-        print("TIMEOUT waiting 3")
-        return "ERROR"
-
-
-    popUp = driver.find_element_by_class_name("fs16")
-    if popUp.text != "Appointments unavailable":
-        driver.close()
-        driver.quit()
-        return "Available"
-    else:
-        driver.close()
-        driver.quit()
-        return "Unavailable"
-
-
-def get_walgreens_datax():
-    session = requests.session()
-    try:
-        print("Getting walgreens start")
-        session.get('https://www.walgreens.com/findcare/vaccination/covid-19/location-screening', timeout=20)
-    except requests.exceptions.RequestException as e:
-        print("WG timeout")
-        return "ERROR"
-
-    url = 'https://www.walgreens.com/hcschedulersvc/svc/v1/immunizationLocations/availability'
-    date = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
-    headers = {
-        'referer': 'https://www.walgreens.com/findcare/vaccination/covid-19/location-screening',
-        'content-type': 'application/json; charset=UTF-8',
-    }
-    body = '{"serviceId":"99","position":{' + cfg.config["wal_location"] + '},"appointmentAvailability":{"startDateTime":"' + date + '"},"radius":25}'
-    try:
-        print("Getting walgreens next")
-        req = session.post(url, data=body, headers=headers, timeout=20)
+        req = requests.get(url)
     except requests.exceptions.RequestException as e:
         return "ERROR"
-    
     json_response = req.json()
-    if 'appointmentsAvailable' not in json_response:
-        return "ERROR"
 
-    if False == json_response['appointmentsAvailable']:
-        return "Unavailable"
+    latham = (42.744869, -73.752037)
+
+    message = ''
+    for site in json_response:
+        site_long = (site['latitude'], site['longitude'])
+        distance = geodesic(latham, site_long).miles
+        if distance < 25:
+            if site['appointments_available'] == True:
+                count = 0
+                for appointment in site['appointments']:
+                    if "2nd Dose Only" not in appointment['type']:
+                        count = count + 1
+
+                message = message + site['city'] + ' (' + str(count) + ') '
+
+    if message != "":
+        return "Available " + message
     else:
-        return "Available"
+        return "Unavailable"
 
 def get_tuc_data():
     is_available = "Unavailable"
