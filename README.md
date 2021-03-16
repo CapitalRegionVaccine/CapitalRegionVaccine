@@ -7,17 +7,17 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-03-16 10:10 AM
+**Last Updated**: 2021-03-16 10:15 AM
 
 | Site                | Status         |
 | ------------------- | -------------- |
 | <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Suny Albany](https://am-i-eligible.covid19vaccine.health.ny.gov/)      | :white_check_mark: AvailableSUNY Albany  (Pfizer)       |
 | <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Albany Armory](https://am-i-eligible.covid19vaccine.health.ny.gov/)    | :no_entry: Unavailable    |
 | <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Times Union Center](https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F)| :no_entry: Unavailable    |
-| <img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13"> [Price Chopper](https://www.pricechopper.com/covidvaccine/new-york/)     | :white_check_mark: Available Albany(6) Albany(10) Albany(7) Schenectady(4) Troy(10) Guilderland(7) Schenectady(18) Clifton Park(1) Glenmont(6) Renselaer(5) Scotia(7)      |
+| <img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13"> [Price Chopper](https://www.pricechopper.com/covidvaccine/new-york/)     | :white_check_mark: Available Albany(6) Albany(10) Albany(7) Schenectady(4) Troy(10) Guilderland(7) Schenectady(18) Clifton Park(1) Glenmont(5) Renselaer(5) Scotia(7)      |
 | <img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13"> [CVS](https://www.cvs.com/immunizations/covid-19-vaccine)               | :white_check_mark: Available Schenectady Troy       |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :white_check_mark: Available Schaghticoke (37) Mechanicville (27) Halfmoon (3) Hoosick Falls (34) Watervliet (49) Loudonville (62) Colonie (17) Albany (13) Rensselaer (35) Guilderland (4)       |
-| <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :white_check_mark: Available (Wednesday 17)      |
+| <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :no_entry: Unavailable    |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available Amsterdam (1)       |
 <!--end: status pages-->
 
