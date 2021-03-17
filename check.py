@@ -102,7 +102,7 @@ def main():
             tweet_it('Times Union Center vaccination appointments are now closed.')
         if "Unavailable" == wmt and last_data['Walmart'].startswith( 'Available' ):
             tweet_it('Walmart vaccination appointments are now closed.')
-        if "Unavailable" == nys and last_data['Queensbury Mall'].startswith( 'Available' ):
+        if "Unavailable" == qns and last_data['Queensbury Mall'].startswith( 'Available' ):
             tweet_it('Queensbury Mall vaccination appointments are now closed.')
 
     except pd.errors.EmptyDataError:
