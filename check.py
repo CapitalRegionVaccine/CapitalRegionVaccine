@@ -22,6 +22,7 @@ def main():
     nys_data = get_nys_data()
     nys = get_nys_appt(nys_data, cfg.config["nys_sites"])
     alb = get_nys_appt(nys_data, cfg.config["alb_sites"])
+    qns = get_nys_appt(nys_data, cfg.config["qns_sites"])
     cvs = get_cvs_data()
     pc  = get_pc_data()
     wal = get_walgreens_data()
@@ -49,8 +50,8 @@ def main():
 
     tz = timezone('America/New_York')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
-    sites = ['SUNY Albany','Albany Armory','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center','Walmart']
-    appointments = [ nys, alb, pc, cvs, wal, han, tuc, wmt ]
+    sites = ['SUNY Albany','Albany Armory','Queensbury Mall','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center','Walmart']
+    appointments = [ nys, alb, qns, pc, cvs, wal, han, tuc, wmt ]
     df_long = pd.DataFrame({'date': date, 'appointments': appointments, 'sites': sites})
     df_long.head()
 
@@ -81,6 +82,8 @@ def main():
             tweet_it('Vaccination appointments are available at Times Union Center '+ tuc_url)
         if wmt.startswith( 'Available' ) and not last_data['Walmart'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Walmart ' + wmt[9:] + wmt_url)
+        if qns.startswith( 'Available' ) and not last_data['Queensbury Mall'].startswith( 'Available' ):
+            tweet_it('Vaccination appointments are available at Queensbury Mall. ' + nys_url)
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
@@ -99,7 +102,8 @@ def main():
             tweet_it('Times Union Center vaccination appointments are now closed.')
         if "Unavailable" == wmt and last_data['Walmart'].startswith( 'Available' ):
             tweet_it('Walmart vaccination appointments are now closed.')
-
+        if "Unavailable" == nys and last_data['Queensbury Mall'].startswith( 'Available' ):
+            tweet_it('Queensbury Mall vaccination appointments are now closed.')
 
     except pd.errors.EmptyDataError:
         df_historical = pd.DataFrame()
