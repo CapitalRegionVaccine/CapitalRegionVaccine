@@ -127,6 +127,7 @@ def main():
             new_md_content += "| ------------------- | -------------- |\n"
             new_md_content += "| " + nys_img + " [Suny Albany](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
             new_md_content += "| " + nys_img + " [Albany Armory](" + nys_url + ")    | " + stat_check(alb) + "    |\n"
+            new_md_content += "| " + nys_img + " [Queensbury Mall](" + nys_url + ")    | " + stat_check(qns) + "    |\n"
             new_md_content += "| " + nys_img + " [Times Union Center](" + tuc_url + ")| " + stat_check(tuc) + "    |\n"
             new_md_content += "| " + pc_img + " [Price Chopper](" + pc_url + ")     | " + stat_check(pc) + "    |\n"
             new_md_content += "| " + cvs_img + " [CVS](" + cvs_url + ")               | " + stat_check(cvs) + "    |\n"
