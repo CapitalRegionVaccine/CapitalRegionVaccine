@@ -29,6 +29,7 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 This checks the following locations approximatly every 5 minutes using GitHub Actions.
 
 * SUNY Albany NYS Vaccination Site
+* Queensbury Mall NYS Vaccination Site
 * Price Chopper Capital Region locations
 * Walgreens within a 25 mile radius of 12110 (Latham, NY)
 * The following CVS locations:
