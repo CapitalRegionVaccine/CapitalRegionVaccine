@@ -215,11 +215,15 @@ def get_han_data():
             return "ERROR"
 
         json_response = req.json()
+        site_avail = False
         if 'Data' in json_response:
             if 'Days' in json_response['Data']:
                 for day in json_response['Data']['Days']:
                     if True == day['Available']:
-                        is_available = is_available + ' ' + cfg.config["han_sites"][site] + ' '
+                        site_avail = True
+        
+        if site_avail == True:
+            is_available = is_available + ' ' + cfg.config["han_sites"][site]
 
     if len(is_available) > 0:
         return "Available" + is_available
