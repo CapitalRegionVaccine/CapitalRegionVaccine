@@ -329,7 +329,7 @@ def get_walgreens_data():
             if site['appointments_available'] == True:
                 count = 0
                 for appointment in site['appointments']:
-                    if 'type' in json_response['appointment']:
+                    if 'type' in appointment:
                         if "2nd Dose Only" not in appointment['type']:
                             count = count + 1
 
