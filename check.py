@@ -195,7 +195,7 @@ def get_han_data():
     month =  datetime.now(tz).strftime('X%m').replace('X0','X').replace('X','')
 
     is_available = ''
-    for site in cfg.config["han_sites"]:
+    for site in cfg.config["han_sites"].keys():
         data = {
             'facilityId': site,
             'month': month,
@@ -219,7 +219,7 @@ def get_han_data():
             if 'Days' in json_response['Data']:
                 for day in json_response['Data']['Days']:
                     if True == day['Available']:
-                        is_available = ' (' +  str(day['DayOfWeek']) + ' ' + str(day['DayNumber']) + ')'
+                        is_available = ' ' + cfg.config["han_sites"][site]
 
     if len(is_available) > 0:
         return "Available" + is_available
