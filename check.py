@@ -19,15 +19,23 @@ from geopy.distance import geodesic
 
 def main():
     # get data
+    tz = timezone('America/New_York')
+    print( "-- starting nys_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     nys_data = get_nys_data()
     nys = get_nys_appt(nys_data, cfg.config["nys_sites"])
     alb = get_nys_appt(nys_data, cfg.config["alb_sites"])
     qns = get_nys_appt(nys_data, cfg.config["qns_sites"])
+    print( "-/ ending nys_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     cvs = get_cvs_data()
+    print( "-/ ending cvs_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     pc  = get_pc_data()
+    print( "-/ ending pc_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     wal = get_walgreens_data()
+    print( "-/ ending wal_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     wmt = get_walmart_data()
+    print( "-/ ending wmt_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     han = get_han_data()
+    print( "-/ ending han_data " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
     #tuc = get_tuc_data()
     tuc = "Unavailable"
 
@@ -48,7 +56,6 @@ def main():
     han_img = '<img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13">'
     wmt_img = '<img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13">'
 
-    tz = timezone('America/New_York')
     date = str(datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S'))
     sites = ['SUNY Albany','Albany Armory','Queensbury Mall','Price Chopper','CVS','Walgreens','Hannaford','Times Union Center','Walmart']
     appointments = [ nys, alb, qns, pc, cvs, wal, han, tuc, wmt ]
@@ -114,6 +121,7 @@ def main():
 
     # save updated file 
     df_historical.to_csv('data/site-data.csv', index = False)
+    print( "-/ ending csv write " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
 
     md_file = open('README.md', 'r')
     new_md_content = ''
@@ -146,6 +154,8 @@ def main():
     md_file = open('README.md', 'w')
     md_file.write(new_md_content)
     md_file.close()
+    print( "-/ finished " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M:%S %p'))
+
 
 def stat_check(data):
     if data.startswith( 'Available' ):
