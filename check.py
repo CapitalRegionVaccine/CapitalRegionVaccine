@@ -6,6 +6,8 @@ import tweepy
 import os
 import config as cfg
 import time
+import asyncio
+import aiohttp
 from time import sleep
 from datetime import datetime, timedelta
 from pytz import timezone
@@ -198,52 +200,56 @@ def get_nys_appt(json_response, nys_sites):
         return "Unavailable"
 
 def get_han_data():
-    session = requests.session()
-    try:
-        session.get('https://hannafordsched.rxtouch.com/rbssched/program/covid19/Patient/Advisory')
-    except requests.exceptions.RequestException as e:
-        return "ERROR"
+    results = asyncio.get_event_loop().run_until_complete(run_hannaford_data())
+    return results
 
-    url = ' https://hannafordsched.rxtouch.com/rbssched/program/covid19/Calendar/PatientCalendar'
+async def run_hannaford_data():
+    async with aiohttp.ClientSession() as session:
+        await session.get('https://hannafordsched.rxtouch.com/rbssched/program/covid19/Patient/Advisory')
+        tasks = [asyncio.create_task(get_hannaford_site_information(site, session)) for site in cfg.config["han_sites"]]
+        results = await asyncio.gather(*tasks)
+        sites = ''
+        for site in results:
+            if site != '':
+                sites = sites + ' ' + site
+        if len(sites) > 0:
+            return "Available" + sites
+        else:
+            return "Unavailable"
+
+async def get_hannaford_site_information(site,session):
     tz = timezone('America/New_York')
+    url = 'https://hannafordsched.rxtouch.com/rbssched/program/covid19/Calendar/PatientCalendar'
     year = str(datetime.now(tz).strftime('%Y'))
     month =  datetime.now(tz).strftime('X%m').replace('X0','X').replace('X','')
+    data = {
+        'facilityId': site,
+        'month': month,
+        'year': year,
+        'snapCalendarToFirstAvailMonth': 'false'
+    }
+
+    try:
+        async with session.post(url,data=data) as response:
+            if response.status == 200:
+                json_response = await response.json()
+            else:
+                return "ERROR"
+    except aiohttp.ClientConnectorError as e:
+        return "ERROR"
+
+    site_avail = False
+    if 'Data' in json_response:
+        if 'Days' in json_response['Data']:
+            for day in json_response['Data']['Days']:
+                if True == day['Available']:
+                    site_avail = True
 
     is_available = ''
-    for site in cfg.config["han_sites"].keys():
-        data = {
-            'facilityId': site,
-            'month': month,
-            'year': year,
-            'snapCalendarToFirstAvailMonth': 'false'
-        }
+    if site_avail == True:
+        is_available = cfg.config["han_sites"][site]
 
-        try:
-            req = session.post(url, data=data)
-        except requests.exceptions.RequestException as e:
-            return "ERROR"
-
-        try:
-            json_object = json.loads(req.text)
-        except ValueError as e:
-            print("Hannaford json error")
-            return "ERROR"
-
-        json_response = req.json()
-        site_avail = False
-        if 'Data' in json_response:
-            if 'Days' in json_response['Data']:
-                for day in json_response['Data']['Days']:
-                    if True == day['Available']:
-                        site_avail = True
-        
-        if site_avail == True:
-            is_available = is_available + ' ' + cfg.config["han_sites"][site]
-
-    if len(is_available) > 0:
-        return "Available" + is_available
-    else:
-        return "Unavailable"
+    return is_available
 
 def get_pc_data():
     try:
