@@ -232,6 +232,12 @@ async def get_hannaford_site_information(site,session):
     try:
         async with session.post(url,data=data) as response:
             if response.status == 200:
+                try: 
+                    text = await response.text()
+                    json_object = json.loads(text)
+               except ValueError as e:
+                    return "ERROR"
+
                 json_response = await response.json()
             else:
                 return "ERROR"
