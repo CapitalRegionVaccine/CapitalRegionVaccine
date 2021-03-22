@@ -235,7 +235,7 @@ async def get_hannaford_site_information(site,session):
                 try: 
                     text = await response.text()
                     json_object = json.loads(text)
-               except ValueError as e:
+                except ValueError as e:
                     return "ERROR"
 
                 json_response = await response.json()
