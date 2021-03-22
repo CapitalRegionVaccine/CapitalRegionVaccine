@@ -210,7 +210,7 @@ async def run_hannaford_data():
         results = await asyncio.gather(*tasks)
         sites = ''
         for site in results:
-            if site != '':
+            if site != '' and site != "ERROR":
                 sites = sites + ' ' + site
         if len(sites) > 0:
             return "Available" + sites
