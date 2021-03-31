@@ -23,7 +23,7 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 <!--end: status pages-->
 
 \*\* *Albany Armory is currently restricted to certain residents.  Please check the NYS website for more details.*  
-\*\*\* *Pharmacies are currently restricted to those 60 and older in NYS and those with comorbidities.  Please check each for individual restrctions.*
+\*\*\* *Pharmacies are currently restricted to those 30 and older in NYS and those with comorbidities.  Please check each for individual restrctions.*
 
 ## Site Information
 
