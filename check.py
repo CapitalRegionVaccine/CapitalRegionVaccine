@@ -86,7 +86,7 @@ def main():
         if alb.startswith( 'Available' ) and not ( last_data['Albany Armory'].startswith( 'Available' ) or last_data['Albany Armory'].startswith( 'ERROR' ) ):
             tweet_it('Vaccination appointments are available at Albany Armory (**resident restricted). ' + nys_url)
         if han.startswith( 'Available' ) and not last_data['Hannaford'].startswith( 'Available' ):
-            tweet_it('Vaccination appointments are available at Hannaford ' + han[9:] + han_url)
+            tweet_it('Vaccination appointments are available at Hannaford ' + han[9:] + ' ' + han_url)
         if tuc.startswith( 'Available' ) and not last_data['Times Union Center'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at Times Union Center '+ tuc_url)
         if wmt.startswith( 'Available' ) and not last_data['Walmart'].startswith( 'Available' ):
