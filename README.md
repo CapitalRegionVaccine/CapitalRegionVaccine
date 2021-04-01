@@ -22,7 +22,6 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available East Greenbush (20) Clifton Park (17) Saratoga Springs (17)       |
 <!--end: status pages-->
 
-\*\* *Albany Armory is currently restricted to certain residents.  Please check the NYS website for more details.*  
 \*\*\* *Pharmacies are currently restricted to those 30 and older in NYS and those with comorbidities.  Please check each for individual restrctions.*
 
 ## Site Information
