@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-04-06 12:50 PM
+**Last Updated**: 2021-04-06 12:45 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -21,6 +21,15 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :no_entry: Unavailable    |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :no_entry: Unavailable    |
 <!--end: status pages-->
+
+## Other locations
+
+Here are a few other places to check we do not have automated checks setup for:
+
+* [Capital Region RX](https://capitalregionalrx.com/covid-vaccine-appointment/)
+* [WellNow - Latham](https://www.clockwisemd.com/hospitals/5761/appointments/schedule_visit)
+* [WellNow - Clifton Park](https://www.clockwisemd.com/hospitals/4409/appointments/schedule_visit)
+* [WellNow - Saratoga](https://www.clockwisemd.com/hospitals/6471/appointments/schedule_visit)
 
 ## Site Information
 
