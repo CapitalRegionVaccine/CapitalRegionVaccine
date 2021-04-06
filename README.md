@@ -22,8 +22,6 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available Albany (1)       |
 <!--end: status pages-->
 
-\*\*\* *Pharmacies are currently restricted to those 30 and older in NYS and those with comorbidities.  Please check each for individual restrctions.*
-
 ## Site Information
 
 This checks the following locations approximatly every 5 minutes using GitHub Actions.
