@@ -7,13 +7,13 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-04-09 12:00 AM
+**Last Updated**: 2021-04-09 12:05 AM
 
 | Site                | Status         |
 | ------------------- | -------------- |
-| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Suny Albany](https://am-i-eligible.covid19vaccine.health.ny.gov/)      | :no_entry: Unavailable    |
-| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Albany Armory](https://am-i-eligible.covid19vaccine.health.ny.gov/)    | :no_entry: Unavailable    |
-| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Queensbury Mall](https://am-i-eligible.covid19vaccine.health.ny.gov/)    | :no_entry: Unavailable    |
+| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Suny Albany](https://am-i-eligible.covid19vaccine.health.ny.gov/)      | :no_entry: ERROR    |
+| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Albany Armory](https://am-i-eligible.covid19vaccine.health.ny.gov/)    | :no_entry: ERROR    |
+| <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Queensbury Mall](https://am-i-eligible.covid19vaccine.health.ny.gov/)    | :no_entry: ERROR    |
 | <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Times Union Center](https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F)| :no_entry: Unavailable    |
 | <img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13"> [Price Chopper](https://www.pricechopper.com/covidvaccine/new-york/)     | :white_check_mark: Available Troy(2) Guilderland(10) Clifton Park(6) Malta(10)      |
 | <img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13"> [CVS](https://www.cvs.com/immunizations/covid-19-vaccine)               | :no_entry: Unavailable    |
