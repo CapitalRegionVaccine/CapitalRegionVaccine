@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-04-16 01:55 PM
+**Last Updated**: 2021-04-16 02:00 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -18,8 +18,8 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13"> [Price Chopper](https://www.pricechopper.com/covidvaccine/new-york/)     | :white_check_mark: Available Schenectady(10) Schenectady(8) Schenectady(10) Scotia(5) Malta(9) Saratoga(5)      |
 | <img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13"> [CVS](https://www.cvs.com/immunizations/covid-19-vaccine)               | :white_check_mark: Available Albany Colonie Queensbury Schenectady Troy Wynantskill       |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :white_check_mark: Available Watervliet (71) Loudonville (68) Schenectady (136)       |
-| <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :white_check_mark: Available Albany Voorheesville Ballston Spa Latham Troy Colonie      |
-| <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available East Greenbush (60) Troy (79) Glenmont (86) Latham (78) Albany (75) Schenectady (87) Glenville (79) Amsterdam (102)       |
+| <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :white_check_mark: Available Albany Ballston Lake Voorheesville Latham Troy Colonie      |
+| <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available East Greenbush (60) Troy (79) Glenmont (86) Latham (78) Albany (75) Schenectady (86) Glenville (79) Amsterdam (102)       |
 <!--end: status pages-->
 
 ## Other locations
