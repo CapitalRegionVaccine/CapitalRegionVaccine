@@ -76,7 +76,7 @@ def main():
 
         ##Maybe tweet new availability
         if nys.startswith( 'Available' ) and not last_data['SUNY Albany'].startswith( 'Available' ):
-            tweet_it('Vaccination appointments are available at SUNY Albany. ' + nys_url)
+            tweet_it('Vaccination appointments are available at Crossgates Mall. ' + nys_url)
         if cvs.startswith( 'Available' ) and not last_data['CVS'].startswith( 'Available' ):
             tweet_it('Vaccination appointments are available at CVS. ' + cvs[9:] + " " + cvs_url)
         if wal.startswith( 'Available' ) and not last_data['Walgreens'].startswith( 'Available' ):
@@ -96,7 +96,7 @@ def main():
 
         ##Maybe tweet new unavailability
         if "Unavailable" == nys and last_data['SUNY Albany'].startswith( 'Available' ):
-            tweet_it('SUNY Albany vaccination appointments are now closed.')
+            tweet_it('Crossgates Mall vaccination appointments are now closed.')
         if "Unavailable" == cvs and last_data['CVS'].startswith( 'Available' ):
             tweet_it('CVS vaccination appointments are now closed.')
         if "Unavailable" == wal and last_data['Walgreens'].startswith( 'Available' ):
@@ -135,7 +135,7 @@ def main():
             new_md_content += "**Last Updated**: " + str(datetime.now(tz).strftime('%Y-%m-%d %I:%M %p')) + "\n\n"
             new_md_content += "| Site                | Status         |\n"
             new_md_content += "| ------------------- | -------------- |\n"
-            new_md_content += "| " + nys_img + " [Suny Albany](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
+            new_md_content += "| " + nys_img + " [Crossgates Mall](" + nys_url + ")      | " + stat_check(nys) + "    |\n"
             new_md_content += "| " + nys_img + " [Albany Armory](" + nys_url + ")    | " + stat_check(alb) + "    |\n"
             new_md_content += "| " + nys_img + " [Queensbury Mall](" + nys_url + ")    | " + stat_check(qns) + "    |\n"
             new_md_content += "| " + nys_img + " [Times Union Center](" + tuc_url + ")| " + stat_check(tuc) + "    |\n"
@@ -190,12 +190,12 @@ def get_nys_appt(json_response, nys_sites):
 
     is_available = ''
     for provider in json_response['providerList']:
-        if provider['providerName'] in nys_sites:
+        if provider['providerName'].find(nys_sites) != -1:
             if "Y" == provider['availableAppointments']:
                 is_available = is_available + provider['providerName'] + " "
     
     if len(is_available) > 0:
-        return "Available" + is_available
+        return "Available " + is_available
     else:
         return "Unavailable"
 
