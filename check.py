@@ -190,12 +190,12 @@ def get_nys_appt(json_response, nys_sites):
 
     is_available = ''
     for provider in json_response['providerList']:
-        if provider['providerName'] in nys_sites:
+        if provider['providerName'].find(nys_sites) != -1:
             if "Y" == provider['availableAppointments']:
                 is_available = is_available + provider['providerName'] + " "
     
     if len(is_available) > 0:
-        return "Available" + is_available
+        return "Available " + is_available
     else:
         return "Unavailable"
 
