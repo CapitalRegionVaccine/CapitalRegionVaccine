@@ -360,7 +360,8 @@ def get_walgreens_data():
                         if "2nd Dose Only" not in appointment['type']:
                             count = count + 1
 
-                message = message + site['city'].title() + ' (' + str(count) + ') '
+                if count != 0:
+                    message = message + site['city'].title() + ' (' + str(count) + ') '
 
     if message != "":
         return "Available " + message
