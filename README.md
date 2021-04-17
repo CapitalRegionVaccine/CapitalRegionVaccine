@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-04-17 07:10 PM
+**Last Updated**: 2021-04-17 07:15 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -19,7 +19,7 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13"> [CVS](https://www.cvs.com/immunizations/covid-19-vaccine)               | :white_check_mark: Available Albany Colonie Queensbury Schenectady Troy Wynantskill       |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :white_check_mark: Available Loudonville (59)       |
 | <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :white_check_mark: Available Albany Albany Voorheesville Ballston Spa Latham Troy Colonie      |
-| <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available East Greenbush (49) Troy (71) Glenmont (66) Latham (73) Albany (70) Clifton Park (51) Schenectady (67) Glenville (70) Saratoga Springs (71) Amsterdam (95)       |
+| <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :white_check_mark: Available East Greenbush (49) Troy (71) Glenmont (65) Latham (73) Albany (70) Clifton Park (50) Schenectady (67) Glenville (70) Saratoga Springs (71) Amsterdam (95)       |
 <!--end: status pages-->
 
 ## Other locations
