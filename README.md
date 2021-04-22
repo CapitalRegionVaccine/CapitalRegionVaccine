@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-04-21 11:35 PM
+**Last Updated**: 2021-04-21 11:40 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
