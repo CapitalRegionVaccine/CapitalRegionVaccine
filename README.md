@@ -7,7 +7,7 @@ This repository checks several locations in the New York State Capital Region fo
 Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> **[Twitter bot](https://twitter.com/RegionVaccine)** <img alt="" src="https://favicons.githubusercontent.com/www.twitter.com" height="13"> to get notified of new appointment availability!
 
 <!--start: status pages-->
-**Last Updated**: 2021-05-14 02:30 PM
+**Last Updated**: 2021-05-14 02:35 PM
 
 | Site                | Status         |
 | ------------------- | -------------- |
@@ -17,7 +17,7 @@ Follow our <img alt="" src="https://favicons.githubusercontent.com/www.twitter.c
 | <img alt="" src="https://favicons.githubusercontent.com/am-i-eligible.covid19vaccine.health.ny.gov" height="13"> [Times Union Center](https://apps2.health.ny.gov/doh2/applinks/cdmspr/2/counties?DateID=BBF046E734D3128CE0530A6C7C165A0F)| :no_entry: Unavailable    |
 | <img alt="" src="https://favicons.githubusercontent.com/www.pricechopper.com" height="13"> [Price Chopper](https://www.pricechopper.com/covidvaccine/new-york/)     | :no_entry: ERROR    |
 | <img alt="" src="https://favicons.githubusercontent.com/www.cvs.com" height="13"> [CVS](https://www.cvs.com/immunizations/covid-19-vaccine)               | :white_check_mark: Available Albany Colonie Latham Queensbury Rensselaer Schenectady Troy       |
-| <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :white_check_mark: Available Schaghticoke (98) Mechanicville (106) Troy (101) Halfmoon (56) Ballston Lake (84) Troy (75) Hoosick Falls (149) Latham (88) Watervliet (139) Saratoga Springs (152) Saratoga Springs (91) Schenectady (158) Loudonville (158) Schenectady (194) Colonie (81) West Sand Lake (143) Albany (174) Rotterdam (141) Rensselaer (141) Guilderland (97) East Greenbush (116) Castleton (119)       |
+| <img alt="" src="https://favicons.githubusercontent.com/www.walgreens.com" height="13"> [Walgreens](https://www.walgreens.com/findcare/vaccination/covid-19/location-screening)         | :white_check_mark: Available Schaghticoke (98) Mechanicville (106) Troy (99) Halfmoon (56) Ballston Lake (84) Troy (75) Hoosick Falls (149) Latham (88) Watervliet (138) Saratoga Springs (152) Saratoga Springs (91) Schenectady (158) Loudonville (158) Schenectady (194) Colonie (81) West Sand Lake (143) Albany (174) Rotterdam (140) Rensselaer (141) Guilderland (95) East Greenbush (116) Castleton (119)       |
 | <img alt="" src="https://favicons.githubusercontent.com/www.hannaford.com" height="13"> [Hannaford](https://www.hannaford.com/pharmacy/covid-19-vaccine)         | :white_check_mark: Available Albany Ballston Lake Voorheesville Wynantskill Altamont Ballston Spa Clifton Park Niskayuna Valatie Saratoga Springs Amsterdam      |
 | <img alt="" src="https://favicons.githubusercontent.com/www.walmart.com" height="13"> [Walmart](https://www.walmart.com/pharmacy/clinical-services/immunization/scheduled?imzType=covid&r=yes)         | :no_entry: Unavailable    |
 <!--end: status pages-->
